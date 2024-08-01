@@ -10,4 +10,8 @@
 </template>
 
 <style>
+.app {
+  inline-size: 100%;
+  min-block-size: 100dvh;
+}
 </style>

@@ -13,11 +13,46 @@
 
     <title>Vite App</title>
 
-    <style></style>
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        color: inherit;
+        font-family: inherit;
+        font-style: inherit;
+        font-weight: inherit;
+        position: relative;
+      }
+
+      :root {
+        color: var(--color-text);
+        font-family: Montserrat, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: min(14px, 3.889dvw);
+
+        --color-background: #f3fdfe;
+        --color-primary: #f9ab10;
+        --color-secondary: #04383f;
+        --color-subtext: #273234;
+        --color-text: #0d1213;
+
+        --color-illustration: var(--color-secondary);
+        --color-primary-complement: var(--color-secondary);
+      }
+
+      body {
+        background-color: var(--color-background);
+        inline-size: 100%;
+        margin: 0px;
+      }
+
+      :where(button) {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+    </style>
   </head>
 
   <body>
-    <div id="app"></div>
+    <div class="app" id="app"></div>
 
     <script type="module" src="/src/main.js"></script>
   </body>
