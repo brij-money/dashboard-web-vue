@@ -13,9 +13,9 @@ export default defineStore('auth', () => {
    * @param {string} email
    * @param {string} password
    * @param {AbortSignal?} [signal = null]
-   * @param {(message: string) => void|Promise<void>} callback
+   * @returns {Promise<string>}
    */
-  async function login(email, password, signal = null, callback = null) {
+  async function login(email, password, signal = null) {
     try {
       const response = await axios.post(
         '/api/auth/login',
@@ -26,7 +26,7 @@ export default defineStore('auth', () => {
       _token.value = response.data.data.token;
       _user.value = response.data.data.user;
 
-      await callback?.(response.data.message);
+      return response.data.message;
     } catch(error) {
       if(!axios.isCancel(error)) {
         throw error;
