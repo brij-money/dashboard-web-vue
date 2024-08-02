@@ -2,11 +2,14 @@ import axios from 'axios';
 import { defineStore } from 'pinia';
 import { computed, ref, watch } from 'vue';
 
+import UserModel from '@/models/user-model.js';
+
 export default defineStore('auth', () => {
+  /** @type {import('vue').Ref<string?>} */
   const _token = ref(localStorage.getItem('auth-store.token') || null);
+  /** @type {import('vue').Ref<UserModel?>} */
   const _user = ref(null);
   const authenticated = computed(() => !!_token.value && !!_user.value);
-  /** @type {import('vue').ComputedRef<User?>} */
   const user = computed(() => _user.value);
 
   /**
@@ -20,7 +23,7 @@ export default defineStore('auth', () => {
         {signal}
       );
 
-      _user.value = response.data.data.user;
+      _user.value = new UserModel(response.data.data.user);
 
       return response.data.message;
     } catch(error) {
@@ -45,7 +48,7 @@ export default defineStore('auth', () => {
       );
 
       _token.value = response.data.data.token;
-      _user.value = response.data.data.user;
+      _user.value = new UserModel(response.data.data.user);
 
       return response.data.message;
     } catch(error) {
