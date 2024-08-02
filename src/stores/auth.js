@@ -10,6 +10,7 @@ export default defineStore('auth', () => {
   /** @type {import('vue').Ref<UserModel?>} */
   const _user = ref(null);
   const authenticated = computed(() => !!_token.value && !!_user.value);
+  const fallback = computed(() => ({name: authenticated.value ? 'overview' : 'login'}));
   const user = computed(() => _user.value);
 
   /**
@@ -84,6 +85,7 @@ export default defineStore('auth', () => {
 
   return {
     authenticated,
+    fallback,
     user,
     hydrate,
     login,

@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router';
 import BrijLogoComponent from '@/components/brij-logo.vue';
 import ButtonComponent from '@/components/button.vue';
 import TextFieldComponent from '@/components/text-field.vue';
-import defaultRoute from '@/router/default.js';
 import useAuthStore from '@/stores/auth.js';
 
 defineOptions({name: 'login-view'});
@@ -41,7 +40,7 @@ async function submit() {
 
       errors.value = null;
 
-      await router.push(await defaultRoute());
+      await router.push(authStore.fallback);
     } catch(error) {
       // express error na..
 
