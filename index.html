@@ -20,7 +20,11 @@
         font-family: inherit;
         font-style: inherit;
         font-weight: inherit;
+        line-height: 1.5;
         position: relative;
+        transition-duration: 120ms;
+        transition-property: none;
+        transition-timing-function: ease-out;
       }
 
       :root {
@@ -29,13 +33,22 @@
         font-size: min(14px, 3.889dvw);
 
         --color-background: #f3fdfe;
+        --color-border: #8b9a9c;
+        --color-boundary: #ddebec;
+        --color-danger: #e04927;
+        --color-dark: #04383f;
+        --color-mute: #4c5d62;
         --color-primary: #f9ab10;
-        --color-secondary: #04383f;
-        --color-subtext: #324043;
+        --color-secondary: #10b796;
+        --color-subtext: #253134;
+        --color-surface: #ffffff;
         --color-text: #0d1213;
 
-        --color-illustration: var(--color-secondary);
-        --color-primary-complement: var(--color-secondary);
+        --color-icon: var(--color-mute);
+        --color-illustration: var(--color-dark);
+        --color-primary-complement: var(--color-dark);
+        --color-primary-complement-hovered: var(--color-primary-complement);
+        --color-primary-hovered: #d7930a;
       }
 
       body {
@@ -44,7 +57,8 @@
         margin: 0px;
       }
 
-      :where(button) {
+      :where(button, input) {
+        font-family: inherit;
         font-size: 1rem;
         font-weight: 500;
       }
