@@ -10,6 +10,27 @@ export default defineStore('auth', () => {
   const user = computed(() => _user.value);
 
   /**
+   * @param {AbortSignal?} [signal = null]
+   * @returns {Promise<string>}
+   */
+  async function hydrate(signal = null) {
+    try {
+      const response = await axios.get(
+        '/api/auth/user',
+        {signal}
+      );
+
+      _user.value = response.data.data.user;
+
+      return response.data.message;
+    } catch(error) {
+      if(!axios.isCancel(error)) {
+        throw error;
+      }
+    }
+  }
+
+  /**
    * @param {string} email
    * @param {string} password
    * @param {AbortSignal?} [signal = null]
@@ -61,6 +82,7 @@ export default defineStore('auth', () => {
   return {
     authenticated,
     user,
+    hydrate,
     login,
   };
 });

@@ -6,4 +6,6 @@ axios.defaults.baseURL = import.meta.env.VITE_API_HOST;
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.Accepted = 'application/json';
 
-useAuthStore();
+const authStore = useAuthStore();
+
+await authStore.hydrate();
