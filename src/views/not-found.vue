@@ -3,9 +3,7 @@ import ButtonComponent from '@/components/button.vue';
 import NotFoundImageComponent from '@/components/not-found-image.vue';
 import { onActivated, onDeactivated, onUnmounted, ref } from 'vue';
 
-defineOptions({
-  name: 'not-found-view',
-});
+defineOptions({name: 'not-found-view'});
 
 const small = ref(innerWidth <= 641);
 

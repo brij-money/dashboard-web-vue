@@ -1,7 +1,5 @@
 <script setup>
-defineOptions({
-  name: 'not-found-image-component',
-});
+defineOptions({name: 'not-found-image-component'});
 </script>
 
 <template>

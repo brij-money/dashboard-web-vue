@@ -1,7 +1,5 @@
 <script setup>
-defineOptions({
-  name: 'overview-view',
-});
+defineOptions({name: 'overview-view'});
 </script>
 
 <template>
