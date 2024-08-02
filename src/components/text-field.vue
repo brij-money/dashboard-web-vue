@@ -6,6 +6,7 @@ import IconComponent from '@/components/icon.vue';
 defineOptions({name: 'text-field-component'});
 const props = defineProps({
   disabled: Boolean,
+  error: Boolean,
   icon: String,
   modelValue: String,
   type: {
@@ -37,6 +38,7 @@ const inputtype = computed(() => {
     <input
       class="text-field-component__field"
       :class="{
+        'text-field-component__field--error': error,
         'text-field-component__field--icon': !!icon,
         'text-field-component__field--password': type == 'password',
       }"
@@ -63,7 +65,10 @@ const inputtype = computed(() => {
       v-if="type == 'password'"
     />
 
-    <div class="text-field-component__error">
+    <div
+      class="text-field-component__error"
+      v-if="error"
+    >
       <slot name="error"/>
     </div>
   </div>
@@ -116,6 +121,15 @@ const inputtype = computed(() => {
   border-color: var(--color-primary);
   outline: 0.16rem solid var(--color-primary);
   outline-offset: 0.08rem;
+}
+
+.text-field-component__field--error {
+  border-color: var(--color-danger);
+}
+
+.text-field-component__field--error:focus-visible {
+  border-color: var(--color-danger);
+  outline-color: var(--color-danger);
 }
 
 .text-field-component__icon {

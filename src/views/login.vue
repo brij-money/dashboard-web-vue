@@ -66,6 +66,7 @@ async function submit() {
       <text-field-component
         class="login-view__card__field"
         :disabled="!!abortController"
+        :error="!!errors?.email?.[0]"
         icon="sms.bulk"
         v-model="form.email"
       >
@@ -76,6 +77,7 @@ async function submit() {
       <text-field-component
         class="login-view__card__field"
         :disabled="!!abortController"
+        :error="!!errors?.password?.[0]"
         icon="key-square.bulk"
         type="password"
         v-model="form.password"
