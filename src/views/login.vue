@@ -1,6 +1,7 @@
 <script setup>
 import { reactive } from 'vue';
 
+import BrijLogoComponent from '@/components/brij-logo.vue';
 import ButtonComponent from '@/components/button.vue';
 import TextFieldComponent from '@/components/text-field.vue';
 
@@ -42,6 +43,14 @@ const form = reactive({
         submit
       >Sign In</button-component>
     </form>
+
+    <div class="login-view__bottom">
+      <brij-logo-component
+        class="login-view__bottom__logo"
+        dark
+      />
+      <div class="login-view__bottom__text">Admin Portal</div>
+    </div>
   </div>
 </template>
 
@@ -49,6 +58,8 @@ const form = reactive({
 .login-view {
   align-items: center;
   display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
   justify-content: center;
   min-block-size: 100dvh;
 }
@@ -76,5 +87,23 @@ const form = reactive({
 
 .login-view__card__action {
   margin-block-start: 1.5rem;
+}
+
+.login-view__bottom {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.login-view__bottom__logo {
+  block-size: auto;
+  inline-size: 5rem;
+}
+
+.login-view__bottom__text {
+  color: var(--color-dark);
+  font-size: 1.125rem;
+  font-weight: 500;
 }
 </style>
