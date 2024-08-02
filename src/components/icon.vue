@@ -32,7 +32,7 @@ const paths = computed(() => {
       :key="index"
       :style="{'--icon-component__path--opacity': path.opacity}"
       v-for="(path, index) of paths"
-    ></path>
+    />
   </svg>
 </template>
 

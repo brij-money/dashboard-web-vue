@@ -27,7 +27,7 @@ const inputtype = computed(() => {
 <template>
   <div class="text-field-component">
     <div class="text-field-component__label">
-      <slot name="label"></slot>
+      <slot name="label"/>
     </div>
 
     <input
@@ -46,7 +46,7 @@ const inputtype = computed(() => {
       class="text-field-component__icon"
       :variant="icon"
       v-if="!!icon"
-    ></icon-component>
+    />
 
     <icon-component
       class="text-field-component__toggle"
@@ -56,10 +56,10 @@ const inputtype = computed(() => {
         fieldRef?.focus();
       "
       v-if="type == 'password'"
-    ></icon-component>
+    />
 
     <div class="text-field-component__error">
-      <slot name="error"></slot>
+      <slot name="error"/>
     </div>
   </div>
 </template>

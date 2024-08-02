@@ -8,7 +8,7 @@ defineProps({submit: Boolean});
     class="button-component"
     :type="submit ? 'submit' : 'button'"
   >
-    <slot></slot>
+    <slot/>
   </button>
 </template>
 
