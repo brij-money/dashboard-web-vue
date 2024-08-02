@@ -1,6 +1,11 @@
 <script setup>
+import SpinnerComponent from '@/components/spinner.vue';
+
 defineOptions({name: 'button-component'});
-defineProps({submit: Boolean});
+defineProps({
+  loading: Boolean,
+  submit: Boolean,
+});
 </script>
 
 <template>
@@ -9,6 +14,11 @@ defineProps({submit: Boolean});
     :type="submit ? 'submit' : 'button'"
   >
     <slot/>
+
+    <spinner-component
+      class="button-component__spinner"
+      v-if="loading"
+    />
   </button>
 </template>
 
@@ -44,5 +54,9 @@ defineProps({submit: Boolean});
   color: var(--color-primary-complement);
   cursor: not-allowed;
   opacity: 0.65;
+}
+
+.button-component__spinner {
+  margin-inline-start: 0.25rem;
 }
 </style>
