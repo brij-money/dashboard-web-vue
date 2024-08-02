@@ -20,7 +20,6 @@ defineOptions({name: 'not-found-image-component'});
 .not-found-image-component {
   display: inline-block;
   fill: none;
-  stroke: none;
   vertical-align: bottom;
 }
 
