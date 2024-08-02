@@ -33,7 +33,7 @@ defineProps({
   outline-offset: 0px;
   padding-block: 0.75rem;
   padding-inline: 1.5rem;
-  transition-property: background-color, border-color, color, outline, outline-offset;
+  transition-property: background-color, border-color, color, opacity, outline, outline-offset;
   white-space: nowrap;
 }
 

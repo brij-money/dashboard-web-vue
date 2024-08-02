@@ -5,6 +5,7 @@ import IconComponent from '@/components/icon.vue';
 
 defineOptions({name: 'text-field-component'});
 const props = defineProps({
+  disabled: Boolean,
   icon: String,
   modelValue: String,
   type: {
@@ -25,7 +26,10 @@ const inputtype = computed(() => {
 </script>
 
 <template>
-  <div class="text-field-component">
+  <div
+    class="text-field-component"
+    :class="{'text-field-component--disabled': disabled}"
+  >
     <div class="text-field-component__label">
       <slot name="label"/>
     </div>
@@ -36,6 +40,7 @@ const inputtype = computed(() => {
         'text-field-component__field--icon': !!icon,
         'text-field-component__field--password': type == 'password',
       }"
+      :disabled="disabled"
       :type="inputtype"
       ref="fieldRef"
       :value="modelValue"
@@ -67,8 +72,13 @@ const inputtype = computed(() => {
 <style>
 .text-field-component {
   display: inline-grid;
-  grid-template-columns: [field-start icon-start label-start] auto [icon-end] 1fr [toggle-start] auto [field-end label-end toggle-end];
+  grid-template-columns: [error-start field-start icon-start label-start] auto [icon-end] 1fr [toggle-start] auto [error-end field-end label-end toggle-end];
   grid-template-rows: [label-start] auto [label-end field-start icon-start toggle-start] auto [field-end icon-end toggle-end error-start] 1fr [error-end];
+  transition-property: opacity;
+}
+
+.text-field-component--disabled {
+  opacity: 0.65;
 }
 
 .text-field-component__label {
