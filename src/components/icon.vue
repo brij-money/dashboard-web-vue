@@ -6,14 +6,12 @@ defineOptions({name: 'icon-component'});
 const props = defineProps({
   variant: {
     type: String,
-    default: 'directbox-default.linear',
+    default: 'directbox-default.outline',
   }
 });
 
 const paths = computed(() => {
   const [{type, style}] = [...props.variant.matchAll(/^(?<type>[a-z\d-]+)\.(?<style>[a-z\d-]+)$/g)].map(e => e.groups ?? {});
-
-  console.log(type, style);
 
   return iconset[type]?.[style] ?? [];
 });
@@ -50,5 +48,6 @@ const paths = computed(() => {
   fill: currentColor;
   fill-rule: evenodd;
   opacity: var(--icon-component__path--opacity);
+  transition-property: d, opacity;
 }
 </style>

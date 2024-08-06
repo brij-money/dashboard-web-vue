@@ -15,10 +15,14 @@ defineProps({
   >
     <slot/>
 
-    <spinner-component
-      class="button-component__spinner"
-      v-if="loading"
-    />
+    <transition name="button-component__loader--transition">
+      <div
+        class="button-component__loader"
+        v-if="loading"
+      >
+        <spinner-component class="button-component__loader__spinner"/>
+      </div>
+    </transition>
   </button>
 </template>
 
@@ -56,7 +60,21 @@ defineProps({
   opacity: 0.65;
 }
 
-.button-component__spinner {
+.button-component__loader {
+  display: inline-block;
   margin-inline-start: 0.25rem;
+  overflow: visible;
+  transition-property: inline-size, opacity;
+}
+
+.button-component__loader--transition-enter-from,
+.button-component__loader--transition-leave-to {
+  opacity: 0;
+  inline-size: 0px;
+}
+
+.button-component__loader--transition-enter-to,
+.button-component__loader--transition-leave-from {
+  inline-size: 1.5em;
 }
 </style>

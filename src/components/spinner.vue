@@ -8,16 +8,16 @@ defineOptions({name: 'spinner-component'});
 
 <style>
 .spinner-component {
-  block-size: 1.5rem;
+  block-size: 1.5em;
   display: inline-block;
-  inline-size: 1.5rem;
+  inline-size: 1.5em;
   vertical-align: bottom;
 }
 
 .spinner-component::before,
 .spinner-component::after {
   block-size: 100%;
-  border: 0.24rem solid transparent;
+  border: 0.24em solid transparent;
   border-radius: 100vmax;
   content: '';
   inline-size: 100%;
