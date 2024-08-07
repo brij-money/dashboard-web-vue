@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import DropdownComponent from '@/components/dropdown.vue';
 import IconComponent from '@/components/icon.vue';
@@ -8,12 +8,28 @@ defineOptions({name: 'select-field-component'});
 const props = defineProps({
   disabled: Boolean,
   error: Boolean,
-  modelValue: String,
+  modelValue: [
+    Boolean,
+    Number,
+    String,
+  ],
 });
-defineEmits(['update:model-value']);
+const emit = defineEmits([
+  'close',
+  'open',
+  'update:model-value',
+]);
 
+const dropdownRef = ref(null);
 const fieldRef = ref(null);
 const opened = ref(false);
+
+defineExpose({
+  close: () => opened.value = false,
+  dropdownRefEl: computed(() => dropdownRef.value?.$el ?? null),
+});
+
+watch(opened, value => emit(value ? 'open' : 'close'));
 </script>
 
 <template>
@@ -50,19 +66,26 @@ const opened = ref(false);
       <!-- MODALS & DROPDOWNS -->
 
       <teleport to="body">
-        <keep-alive>
-          <transition name="select-field-component__dropdown--transition">
+        <transition name="select-field-component__dropdown--transition">
+          <keep-alive>
             <dropdown-component
               class="select-field-component__dropdown"
               match-target-width
+              ref="dropdownRef"
               :target="fieldRef"
               @close="opened = false;"
               v-if="opened"
             >
-              <slot name="options"/>
+              <div class="select-field-component__dropdown__actions">
+                <slot name="actions"/>
+              </div>
+
+              <div class="select-field-component__dropdown__options">
+                <slot name="options"/>
+              </div>
             </dropdown-component>
-          </transition>
-        </keep-alive>
+          </keep-alive>
+        </transition>
       </teleport>
     </button>
 
@@ -134,6 +157,7 @@ const opened = ref(false);
 .select-field-component__field__display {
   grid-area: display;
   overflow: hidden;
+  text-align: start;
 }
 
 .select-field-component__field__arrow {
@@ -158,6 +182,26 @@ const opened = ref(false);
   display: none;
 }
 
+.select-field-component__dropdown__actions {
+  background-image: linear-gradient(to bottom, var(--color-surface) calc(100% - 0.5rem), transparent);
+  inset-block-start: 0px;
+  padding-block: 0.75rem 0.25rem;
+  padding-inline: 0.75rem;
+  position: sticky;
+  z-index: 1;
+}
+
+.select-field-component__dropdown__actions:empty {
+  display: none;
+}
+
+.select-field-component__dropdown__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+}
+
 .select-field-component__dropdown--transition-enter-from,
 .select-field-component__dropdown--transition-leave-to {
   opacity: 0;
@@ -166,6 +210,6 @@ const opened = ref(false);
 
 .select-field-component__dropdown--transition-enter-active,
 .select-field-component__dropdown--transition-leave-active {
-  transition-property: opacity, translate;
+  transition-property: all;
 }
 </style>

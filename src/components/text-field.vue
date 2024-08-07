@@ -9,6 +9,7 @@ const props = defineProps({
   error: Boolean,
   icon: String,
   modelValue: String,
+  placeholder: String,
   type: {
     type: String,
     default: 'text',
@@ -43,8 +44,9 @@ const inputtype = computed(() => {
         'text-field-component__field--password': type == 'password',
       }"
       :disabled="disabled"
-      :type="inputtype"
+      :placeholder="placeholder"
       ref="fieldRef"
+      :type="inputtype"
       :value="modelValue"
       @input="$emit('update:model-value', $event.target.value);"
     >
@@ -130,6 +132,11 @@ const inputtype = computed(() => {
 .text-field-component__field--error:focus-visible {
   border-color: var(--color-danger);
   outline-color: var(--color-danger);
+}
+
+.text-field-component__field::placeholder {
+  color: var(--color-mute);
+  font-weight: 300;
 }
 
 .text-field-component__icon {

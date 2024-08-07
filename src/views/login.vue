@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 
 import BrijLogoComponent from '@/components/brij-logo.vue';
 import ButtonComponent from '@/components/button.vue';
-import SelectFieldComponent from '@/components/select-field.vue';
+import CountrySelectFieldComponent from '@/components/country-select-field.vue';
 import TextFieldComponent from '@/components/text-field.vue';
 import useAuthStore from '@/stores/auth.js';
 
@@ -17,7 +17,7 @@ const authStore = useAuthStore();
 const abortController = ref(null);
 const errors = ref(null);
 const form = reactive({
-  corridor: '',
+  corridor: 1,
   email: '',
   password: '',
 });
@@ -65,16 +65,14 @@ async function submit() {
     >
       <div class="login-view__card__title">Login</div>
 
-      <select-field-component
+      <country-select-field-component
         class="login-view__card__field"
         :disabled="!!abortController"
+        enable-search
         v-model="form.corridor"
       >
         <template #label>Corridor</template>
-        <template #options>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum adipisci magni quidem repellendus. Nemo neque ipsum, labore quia error aspernatur sed facilis, repellat officia placeat delectus nisi temporibus qui blanditiis totam nesciunt aperiam, maiores praesentium omnis obcaecati distinctio voluptate. Necessitatibus, ullam animi doloribus debitis facere nisi adipisci omnis esse, ipsum voluptates iusto, molestias enim quibusdam alias commodi? Recusandae earum et ipsum exercitationem sequi soluta, aliquam nobis, accusantium nam maiores aliquid? Tempore officiis omnis voluptatem debitis quisquam veritatis rerum quos placeat esse ipsam. Saepe consequatur provident ipsa in pariatur minus. Modi laudantium nostrum cum fugiat minus quos quisquam aspernatur omnis officia.
-        </template>
-      </select-field-component>
+      </country-select-field-component>
 
       <text-field-component
         class="login-view__card__field"

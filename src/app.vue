@@ -11,18 +11,18 @@ watch(
 
 <template>
   <router-view #default="{Component, route}">
-    <keep-alive>
-      <transition
-        :name="`app__view--${route.meta.transition ?? 'transition'}`"
-        @before-enter="transitioning = true;"
-        @after-enter="transitioning = false;"
-      >
+    <transition
+      :name="`app__view--${route.meta.transition ?? 'transition'}`"
+      @before-enter="transitioning = true;"
+      @after-enter="transitioning = false;"
+    >
+      <keep-alive>
         <component
           class="app__view"
           :is="Component"
         ></component>
-      </transition>
-    </keep-alive>
+      </keep-alive>
+    </transition>
   </router-view>
 </template>
 
@@ -47,7 +47,7 @@ watch(
 
 .app__view--transition-enter-active,
 .app__view--transition-leave-active {
-  transition-property: opacity, scale, translate;
+  transition-property: all;
 }
 
 .app__view--transition-leave-active {

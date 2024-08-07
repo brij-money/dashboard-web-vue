@@ -11,6 +11,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['close']);
 
+let adjustFrame;
 let frame;
 
 const { index, peak } = useOverlay();
@@ -19,6 +20,7 @@ const adjusted = ref(false);
 const height = ref(0);
 const left = ref(0);
 const mainRef = ref(null);
+const scrollHeight = ref(0);
 const targetBounds = reactive({
   top: 0,
   left: 0,
@@ -26,6 +28,14 @@ const targetBounds = reactive({
   height: 0,
 });
 const top = ref(0);
+
+function _finalize() {
+  next(true);
+}
+
+function _initialize() {
+  adjust();
+}
 
 function adjust() {
   if(!!props.target && !!mainRef.value && !adjusted.value) {
@@ -51,14 +61,13 @@ function adjust() {
     }
 
     //Vertical Alignment
-    const spaceBelow = (innerHeight - targetRect.bottom) - 0.5 * fontSize;
-    const spaceAbove = targetRect.top - 0.5 * fontSize;
-    const below = spaceBelow >= 15 * fontSize;
+    const minHeight = 15 * fontSize ;
+    const spaceBelow = innerHeight - targetRect.bottom;
+    const spaceAbove = targetRect.top;
+    const below = spaceBelow >= minHeight || spaceBelow >= spaceAbove;
 
-    height.value = Math.min(below ? spaceBelow : spaceAbove, mainRect.height);
-    top.value = below
-      ? (targetRect.bottom + 0.5 * fontSize)
-      : (targetRect.top - height.value - 0.5 * fontSize);
+    height.value = Math.max(minHeight, Math.min(below ? spaceBelow : spaceAbove, mainRect.height));
+    top.value = below ? targetRect.bottom : (targetRect.top - height.value);
 
     next();
   } else if((!mainRef.value || !props.target) && adjusted.value) {
@@ -84,6 +93,8 @@ function loop(stop = false) {
     return;
   }
 
+  adjust();
+
   next(stop);
 }
 
@@ -96,6 +107,16 @@ function next(stop = false) {
     removeEventListener('click', onBlur);
 
     return;
+  }
+
+  if(!!mainRef.value) {
+    const fontSize = Math.min(14, 0.03889 * innerWidth);
+    const currentHeight = Math.max(15 * fontSize, Math.min(21.5 * fontSize, mainRef.value.scrollHeight));
+
+    if(scrollHeight.value != currentHeight) {
+      scrollHeight.value = currentHeight;
+      adjusted.value = false;
+    }
   }
 
   frame = requestAnimationFrame(() => loop(stop));
@@ -123,10 +144,10 @@ watch(
   () => adjust()
 );
 
-onUnmounted(() => next(true));
-onMounted(() => adjust());
-onActivated(() => adjust());
-onDeactivated(() => next(true));
+onMounted(_initialize);
+onUnmounted(_finalize);
+onActivated(_initialize);
+onDeactivated(_finalize);
 </script>
 
 <template>
@@ -154,7 +175,7 @@ onDeactivated(() => next(true));
 .dropdown-component {
   background-color: var(--color-surface);
   block-size: var(--dropdown-component--block-size);
-  border: 0.08rem solid var(--color-boundary);
+  box-shadow: 0.16rem 0.16rem 0.32rem 0px var(--color-shadow);
   border-radius: 0.75rem;
   inset-block-start: var(--dropdown-component--inset-block-start);
   inset-inline-start: var(--dropdown-component--inset-inline-start);
